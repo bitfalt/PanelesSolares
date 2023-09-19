@@ -1,5 +1,15 @@
 {
-  "dependencies" : {
+    "scopedRegistries": [
+        {
+            "name": "OpenUPM",
+            "url": "https://package.openupm.com",
+            "scopes": [
+                "com.atteneder"
+            ]
+        }
+    ],
+    "dependencies": {
+    "com.ptc.vuforia.engine": "file:com.ptc.vuforia.engine-10.17.4.tgz",
     "com.unity.collab-proxy" : "2.0.5",
     "com.unity.ide.rider" : "3.0.24",
     "com.unity.ide.visualstudio" : "2.0.18",
@@ -42,14 +52,5 @@
     "com.unity.modules.wind" : "1.0.0",
     "com.unity.modules.xr" : "1.0.0",
     "com.atteneder.gltfast" : "5.0.4"
-  },
-  "scopedRegistries" : [
-    {
-      "name" : "OpenUPM",
-      "url" : "https://package.openupm.com",
-      "scopes" : [
-        "com.atteneder"
-      ]
-    }
-  ]
+  }
 }

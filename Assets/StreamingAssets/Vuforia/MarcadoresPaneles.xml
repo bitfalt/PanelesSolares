@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig>
+  <Tracking>
+    <ImageTarget name="marcador-CHILE" size="0.100000 0.101006" />
+    <ImageTarget name="marcador-GER" size="0.100000 0.097143" />
+    <ImageTarget name="marcador-CR" size="0.100000 0.095994" />
+    <ImageTarget name="marcador-90" size="0.100000 0.078544" />
+    <ImageTarget name="marcador-35" size="0.100000 0.078701" />
+    <ImageTarget name="marcador-30" size="0.100000 0.078646" />
+    <ImageTarget name="marcador-15" size="0.100000 0.078934" />
+    <ImageTarget name="marcador-5" size="0.100000 0.078599" />
+    <ImageTarget name="marcador-invierno" size="0.100000 0.078244" />
+    <ImageTarget name="marcador-verano" size="0.100000 0.078084" />
+    <ImageTarget name="marcador-barra-amarilla" size="0.100000 0.100441" />
+    <ImageTarget name="marcador-barraverde" size="0.100000 0.100246" />
+    <ImageTarget name="marcador-terreno" size="0.200000 0.199747" />
+  </Tracking>
+</QCARConfig>
