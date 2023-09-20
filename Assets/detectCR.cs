@@ -26,13 +26,15 @@ public class targetsCR : DefaultObserverEventHandler
     bool allTracked = true;
 
     foreach (targetsCR tracker in otherTrackers)
-    {
+    {   
+        // Si uno de los targets no se encuentra en la camara, cambia la variable para no mostrar el asset
         if (tracker.mObserverBehaviour.TargetStatus.Status != Status.TRACKED) {
         allTracked = false;
         break;
         }
     }
 
+    // Si todos los targets se encuentran en la camara, muestra el asset
     if(allTracked) {
         //Debug.Log("All trackers are tracked");
         if (test == null)
