@@ -4,65 +4,76 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.EditorTools;
 
-public class targetsCR : DefaultObserverEventHandler
+public class assetHandler : DefaultObserverEventHandler
 {
-    public targetsCR[] allTrackers; //trackers que se van a observar
 
-    public GameObject[] assets; //gmOb que se mostrara cuando se cumplan las condiciones
+    public GameObject[] assetsPrefabs;
+    private List<GameObject> pooledAssets;
 
-    public int debugNumCase;
+    protected override void Start() {
+        
+        // Run DefaultObserverEventHandler Start()
+        base.Start();
 
+        // Pool the assets
+        pooledAssets = new List<GameObject>();
+        
+        foreach (GameObject assetPrefab in assetsPrefabs) {
+            GameObject asset = Instantiate(assetPrefab);
+            // Remove Clone from name
+            asset.name = assetPrefab.name;
 
-    private Dictionary<string, int> markerValues = new Dictionary<string, int>{
-        {"marcador-CR", 1},
-        {"marcador-CHILE", 2},
-        {"marcador-GER", 3},
-        {"marcador-verano", 10},
-        {"marcador-invierno", 20},
-        {"marcador-5", 100},
-        {"marcador-15", 200},
-        {"marcador-30", 300},
-        {"marcador-35", 400},
-        {"marcador-90", 500}
-    };
+            asset.transform.SetParent(transform);
+            asset.transform.localPosition= new Vector3(0, 0, 0);
+            asset.transform.localScale = Vector3.one;
+            asset.transform.Rotate(0, 180, 0);
 
-    // Update se llama en cada frame, revisa si los trackers estan activos y si es asi activa el gmOb
-    protected virtual void Update(){
-        checkTrackers();
+            asset.SetActive(false);
+            pooledAssets.Add(asset);
+        }
     }
 
-    public void checkTrackers(){
-        int numCase = 0;
 
-        foreach (targetsCR tracker in allTrackers){   
-            // Obtiene el nombre del target (nombre registrado en la base de datos)
-            var name = tracker.mObserverBehaviour.TargetName;
+    private GameObject searchAsset(string nameAsset) {
 
-            // Obtiene el status actual del target
-            Status status = tracker.mObserverBehaviour.TargetStatus.Status;
-
-            if (markerValues.ContainsKey(name) && status == Status.TRACKED){
-                numCase += markerValues[name];
+        foreach (GameObject poolAsset in pooledAssets){
+            if (poolAsset.name == nameAsset) {
+                return poolAsset;
             }
         }
-        // Se pasa el numero segun los marcadores detectados para mostrar el asset correspondiente
-        debugNumCase = numCase;
-        Debug.Log("Numero de caso: " + numCase);
-        displayAsset(numCase);
+
+        return null;
+
     }
 
-    public void displayAsset(int num)
-    {
-        foreach (GameObject asset in assets){
-            asset.SetActive(false);
-        }
 
-        // Switch para Costa Rica
+
+    private void handleAssetOnTarget(GameObject asset) {
+        asset.transform.SetParent(transform);
+        asset.transform.localPosition= new Vector3(0, 0, 0);
+        asset.transform.localScale = Vector3.one;
+    }
+
+    public void displayAsset(int num) {
+
+        GameObject assetCase;
+        Status status = this.mObserverBehaviour.TargetStatus.Status;
+
+         // Switch para Costa Rica
         switch (num) 
         {
             case 111:
-            assets[0].SetActive(true);
-            assets[0].transform.position = new Vector3(0, 0.051f, 0.127f);
+            assetCase = searchAsset("costarica+verano+5");
+
+            if (status == Status.TRACKED) {
+                //handleAssetOnTarget(assetCase);
+                assetCase.SetActive(true);
+            }
+            else {
+                assetCase.SetActive(false);
+            }
+        
+            
             // display CR verano angulo 5
             break;
 
@@ -95,11 +106,22 @@ public class targetsCR : DefaultObserverEventHandler
             break;
 
             case 511:
+
             // display CR invierno angulo 90
             break;
 
             case 521:
-            // dispaly CR verano angulo 90
+
+            assetCase = searchAsset("costarica+invierno+90");
+
+            if (status == Status.TRACKED) {
+                //handleAssetOnTarget(assetCase);
+                assetCase.SetActive(true);
+            }
+            else {
+                assetCase.SetActive(false);
+            }
+            // dispaly CR invierno angulo 90
             break;
 
         }
@@ -144,7 +166,7 @@ public class targetsCR : DefaultObserverEventHandler
             break;
 
             case 522:
-            // display CHILE verano 90
+            // display CHILE invierno 90
             break;
         }
 
@@ -191,7 +213,9 @@ public class targetsCR : DefaultObserverEventHandler
             // display GER invierno 90
             break;
         }
+
+
+
     }
 
 }
-

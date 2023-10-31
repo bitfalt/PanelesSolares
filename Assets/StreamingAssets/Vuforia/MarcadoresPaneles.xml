@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig>
   <Tracking>
+    <ImageTarget name="marcador-test" size="0.200000 0.200000" />
     <ImageTarget name="marcador-CHILE" size="0.100000 0.101006" />
     <ImageTarget name="marcador-GER" size="0.100000 0.097143" />
     <ImageTarget name="marcador-CR" size="0.100000 0.095994" />
